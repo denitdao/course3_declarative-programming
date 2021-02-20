@@ -5,14 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab01"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <StackPanel 
-        Margin="50,100">
-        <Label HorizontalAlignment="Center" Content="Label"/>
+        Title="MainWindow" Height="250" Width="600">
+    <WrapPanel 
+        Margin="92,50">
+        <Label Content="Label"/>
         <TextBox Text="TextBox"/>
         <TextBox Text="TextBox"/>
         <TextBox Text="TextBox"/>
         <TextBox Text="TextBox"/>
-        <Button Content="Button" Margin="200,50"/>
-    </StackPanel>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <Label Content="Label"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <TextBox Text="TextBox"/>
+        <Button Margin="180,30" Content="Button"/>
+    </WrapPanel>
 </Window>

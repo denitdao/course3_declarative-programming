@@ -5,11 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab01"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="600">
-    <Canvas
-        Background="Cyan">
-        <Label Content="Label" Canvas.Left="20" Canvas.Top="20"/>
-        <TextBox Text="text" Width="30" Canvas.Left="40" Canvas.Top="40"/>
-        <Button Content="Button" Height="20" Canvas.Left="60" Canvas.Top="60"/>
-    </Canvas>
+        Title="TextEditor" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" 
+                    BorderBrush="#FFCBBEBE" 
+                    BorderThickness="2" 
+                    CornerRadius="10"
+                    ClipToBounds="True">
+            <StackPanel Orientation="Horizontal">
+                <Button Height="100" Width="100" ToolTip="Открыть">
+                    <Image Source="./images/open.png"/>
+                </Button>
+                <Button Height="100" Width="100" ToolTip="Стереть">
+                    <Image Source="./images/clear.png"/>
+                </Button>
+                <Button Height="100" Width="100" ToolTip="Копировать">
+                    <Image Source="./images/copy.png"/>
+                </Button>
+                <Button Height="100" Width="100" ToolTip="Вставить">
+                    <Image Source="./images/paste.png"/>
+                </Button>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" 
+                    BorderBrush="#FFCBBEBE" 
+                    BorderThickness="2" 
+                    CornerRadius="10"
+                    ClipToBounds="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" 
+                         VerticalScrollBarVisibility="Visible" 
+                         Margin="10"
+                         AcceptsReturn="True">
+                    default
+                </TextBox>
+                <DockPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0, 0, 0, 10">
+                    <Button DockPanel.Dock="Bottom">OK</Button>
+                </DockPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </Window>

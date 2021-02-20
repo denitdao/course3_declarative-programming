@@ -6,26 +6,10 @@
         xmlns:local="clr-namespace:lab01"
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="600">
-    <WrapPanel 
-        Margin="92,50">
-        <Label Content="Label"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <Label Content="Label"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <TextBox Text="TextBox"/>
-        <Button Margin="180,30" Content="Button"/>
-    </WrapPanel>
+    <DockPanel>
+        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Content="Label"/>
+        <TextBox DockPanel.Dock="Left" Text="TextBox" Width="230"/>
+        <TextBox DockPanel.Dock="Right" Text="TextBox"  Width="230"/>
+        <Button DockPanel.Dock="Bottom" Margin="20,130,20,30" Content="Button" Height="20"/>
+    </DockPanel>
 </Window>

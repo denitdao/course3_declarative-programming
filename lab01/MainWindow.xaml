@@ -28,17 +28,17 @@
                     BorderThickness="2" 
                     CornerRadius="10"
                     Background="{StaticResource LinearPanelBrush}">
-            <StackPanel Orientation="Horizontal">
-                <Button Height="100" Width="100" ToolTip="Открыть">
+            <StackPanel FocusManager.IsFocusScope="True" Orientation="Horizontal">
+                <Button Height="100" Width="100" ToolTip="Открыть" Command="Open">
                     <Image Source="./images/open.png"/>
                 </Button>
-                <Button Height="100" Width="100" ToolTip="Стереть">
+                <Button Height="100" Width="100" ToolTip="Стереть" Command="Delete">
                     <Image Source="./images/clear.png"/>
                 </Button>
-                <Button Height="100" Width="100" ToolTip="Копировать">
+                <Button Height="100" Width="100" ToolTip="Копировать" Command="Copy">
                     <Image Source="./images/copy.png"/>
                 </Button>
-                <Button Height="100" Width="100" ToolTip="Вставить">
+                <Button Height="100" Width="100" ToolTip="Вставить" Command="Paste">
                     <Image Source="./images/paste.png"/>
                 </Button>
             </StackPanel>
@@ -56,11 +56,15 @@
                 <TextBox Grid.Row="0" 
                          VerticalScrollBarVisibility="Visible" 
                          Margin="10"
-                         AcceptsReturn="True">
+                         AcceptsReturn="True"
+                         Name="inputTextBox"
+                         FontSize="{Binding ElementName=fontSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}">
                     default
                 </TextBox>
-                <DockPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0, 0, 0, 10">
-                    <Button DockPanel.Dock="Bottom" Style="{x:Null}">OK</Button>
+                <DockPanel Grid.Row="1" Margin="10, 0, 10, 10">
+                    <Label DockPanel.Dock="Left" Foreground="White">Размер шрифта:</Label>
+                    <Slider DockPanel.Dock="Left" Margin="4" MinWidth="100" Name="fontSlider" Maximum="100" Minimum="12"></Slider>
+                    <Button DockPanel.Dock="Right" Style="{x:Null}" Width="30" ToolTip="Сохранить" Command="Save">OK</Button>
                 </DockPanel>
             </Grid>
         </Border>

@@ -6,6 +6,18 @@
         xmlns:local="clr-namespace:lab01"
         mc:Ignorable="d"
         Title="TextEditor" Height="450" Width="800">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="LinearPanelBrush">
+            <GradientStop Color="Yellow" Offset="0"/>
+            <GradientStop Color="Blue" Offset="0.5"/>
+            <GradientStop Color="Yellow" Offset="1"/>
+        </LinearGradientBrush>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="White"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -15,7 +27,7 @@
                     BorderBrush="#FFCBBEBE" 
                     BorderThickness="2" 
                     CornerRadius="10"
-                    ClipToBounds="True">
+                    Background="{StaticResource LinearPanelBrush}">
             <StackPanel Orientation="Horizontal">
                 <Button Height="100" Width="100" ToolTip="Открыть">
                     <Image Source="./images/open.png"/>
@@ -35,7 +47,7 @@
                     BorderBrush="#FFCBBEBE" 
                     BorderThickness="2" 
                     CornerRadius="10"
-                    ClipToBounds="True">
+                    Background="{StaticResource LinearPanelBrush}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -48,7 +60,7 @@
                     default
                 </TextBox>
                 <DockPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0, 0, 0, 10">
-                    <Button DockPanel.Dock="Bottom">OK</Button>
+                    <Button DockPanel.Dock="Bottom" Style="{x:Null}">OK</Button>
                 </DockPanel>
             </Grid>
         </Border>

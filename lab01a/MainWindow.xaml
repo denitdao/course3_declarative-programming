@@ -3,10 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:lab01a"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MyPaint" Height="450" Width="800" MinWidth="150" MinHeight="100" Icon="./images/pencil.png">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" FontSize="14" Background="#FFCCE3FC">
+            <Button Name="btn_open" Click="Open_Click">Open</Button>
+            <Button Name="btn_save" Click="Save_Click">Save</Button>
+            <Separator VerticalAlignment="Stretch" Margin="10, 2"/>
+            <Button Name="btn_undo" Click="Undo_Click">Undo</Button>
+            <Button Name="btn_select" Click="Select_Click">Select</Button>
+            <Separator VerticalAlignment="Stretch" Margin="10, 2"/>
+            <Button x:Name="btn_pencil" Click="Pencil_Click">Pencil</Button>
+            <Button Name="btn_eraser" Click="Eraser_Click">Eraser</Button>
+            <Separator VerticalAlignment="Stretch" Margin="10, 2, 0, 2"/>
+            <Slider VerticalAlignment="Center" Margin="10, 5" Name="thickness_slider" 
+                    Width="100" ValueChanged="Thickness_Change" ToolTip="line thickness"/>
+            <xctk:ColorPicker Name="color_picker" Margin="0, 5" Width="120" Height="20" DisplayColorAndName="True"
+                              SelectedColorChanged="Color_Change" ToolTip="line color"/>
+        </ToolBar>
+        <InkCanvas Grid.Row="1" Name="inkCanvas" Background="Transparent">
+        </InkCanvas>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace lab01
 
     public partial class MainWindow : Window
     {
+        String filePath = @".\myFile.txt";
+
         void CanExecute_Save(object sender, CanExecuteRoutedEventArgs e)
         {
             if (inputTextBox.Text.Trim().Length > 0)
@@ -28,21 +31,27 @@ namespace lab01
 
         void Execute_Save(object sender, ExecutedRoutedEventArgs e)
         {
-            System.IO.File.WriteAllText(@".\myFile.txt", inputTextBox.Text);
+            System.IO.File.WriteAllText(filePath, inputTextBox.Text);
             MessageBox.Show("The file was saved!");
         }
 
         void CanExecute_Open(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (System.IO.File.ReadAllText(@".\myFile.txt").Trim().Length > 0)
-                e.CanExecute = true;
-            else
-                e.CanExecute = false;
+            e.CanExecute = true;
         }
 
         void Execute_Open(object sender, ExecutedRoutedEventArgs e)
         {
-            inputTextBox.Text = System.IO.File.ReadAllText(@".\myFile.txt");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt";
+            openFileDialog.InitialDirectory = @"C:\temp\";
+            openFileDialog.Multiselect = false;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                filePath = openFileDialog.FileName;
+                inputTextBox.Text = System.IO.File.ReadAllText(filePath);
+            }
         }
 
         void CanExecute_Delete(object sender, CanExecuteRoutedEventArgs e)

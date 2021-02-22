@@ -57,6 +57,7 @@
                          VerticalScrollBarVisibility="Visible" 
                          Margin="10"
                          AcceptsReturn="True"
+                         TextWrapping="Wrap"
                          Name="inputTextBox"
                          FontSize="{Binding ElementName=fontSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}">
                     default

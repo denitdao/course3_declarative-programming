@@ -27,7 +27,9 @@
             <xctk:ColorPicker Name="color_picker" Margin="0, 5" Width="120" Height="20" DisplayColorAndName="True"
                               SelectedColorChanged="Color_Change" ToolTip="line color"/>
         </ToolBar>
-        <InkCanvas Grid.Row="1" Name="inkCanvas" Background="Transparent">
-        </InkCanvas>
+        <ScrollViewer Grid.Row="1">
+            <InkCanvas Height="800" Name="inkCanvas" Background="Transparent">
+            </InkCanvas>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -51,5 +51,4 @@
                  Text="{Binding Path=About, Mode=OneWay}"
                  Focusable="False" />
     </Grid>
-
 </Window>

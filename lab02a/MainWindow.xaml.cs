@@ -55,14 +55,14 @@ namespace lab02a
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView item = (DataRowView) list.SelectedItem;
-            address.DeleteNote((int) item.Row.ItemArray[0]);
+            DataRowView item = (DataRowView)list.SelectedItem;
+            address.DeleteNote((int)item.Row.ItemArray[0]);
             Update_DataContext();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView item = (DataRowView) list.SelectedItem;
+            DataRowView item = (DataRowView)list.SelectedItem;
             address.UpdateNote(item.Row.ItemArray);
             Update_DataContext();
         }
@@ -105,7 +105,7 @@ namespace lab02a
             using (SqlConnection сonnection = new SqlConnection(connectionString)) //Создаем объект подключения
             {
                 SqlCommand insertCommand = сonnection.CreateCommand();
-                
+
                 insertCommand.CommandText = "Insert Into Notes(LastUpdate) " +
                     "Values(@LastUpdate)";
 
@@ -142,11 +142,11 @@ namespace lab02a
                 insertCommand.Parameters.AddWithValue("@Title", properties[1]);
                 insertCommand.Parameters.AddWithValue("@Content", properties[2]);
                 insertCommand.Parameters.AddWithValue("@LastUpdate", DateTime.Now);
-сonnection.Open();
-                    insertCommand.ExecuteNonQuery();
+                
                 try
                 {
-                    
+                    сonnection.Open();
+                    insertCommand.ExecuteNonQuery();
                     dt = null;
                 }
                 catch (Exception)

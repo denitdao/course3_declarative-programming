@@ -10,6 +10,11 @@ namespace lab03
     {
         static void Main(string[] args)
         {
+            DBTestEntities context = new DBTestEntities();
+            foreach (var item in context.Courses)
+                Console.WriteLine(item.Id + "\t" 
+                    + item.Title + "\t" 
+                    + item.Professor.Surname);
         }
     }
 }

@@ -8,13 +8,30 @@ namespace lab03
 {
     class Program
     {
+        private static DBTestEntities context = new DBTestEntities();
+
         static void Main(string[] args)
         {
-            DBTestEntities context = new DBTestEntities();
-            foreach (var item in context.Courses)
-                Console.WriteLine(item.Id + "\t" 
-                    + item.Title + "\t" 
-                    + item.Professor.Surname);
+            WriteLINQ();
+            Console.WriteLine("-----------------------");
+            WriteSQL();
+            Console.ReadLine();
         }
+
+        static void WriteLINQ()
+        {
+            List<Professor> professors = context.Courses.Select(c => c.Professor).Where(c => c.Name.Length > 5).ToList();
+            foreach (var item in professors)
+                Console.WriteLine(item.Id + "\t" + item.Surname);
+
+        }
+
+        static void WriteSQL()
+        {
+            List<Professor> professors = context.Professors.SqlQuery("SELECT * FROM PROFESSOR").ToList();
+            foreach (var item in professors)
+                Console.WriteLine(item.Id + "\t" + item.Surname);
+        }
+
     }
 }

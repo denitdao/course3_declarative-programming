@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace lab03a
     /// </summary>
     public partial class MainWindow : Window
     {
-        DBConnection address;
+        DBConnection db = new DBConnection();
 
         public MainWindow()
         {
@@ -34,157 +35,78 @@ namespace lab03a
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            address = new DBConnection();
             Update_DataContext();
         }
 
-        private void Update_DataContext()
+        private void Update_DataContext(string searchString = "")
         {
-            list.DataContext = address.TableLoad();
+            list.DataContext = db.GetAllNotes(searchString);
             list.SelectedIndex = 0;
             list.Focus();
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            address.AddNote();
+            db.AddNote();
             Update_DataContext();
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView item = (DataRowView)list.SelectedItem;
-            address.DeleteNote((int)item.Row.ItemArray[0]);
+            Note item = (Note)list.SelectedItem;
+            db.DeleteNote(item);
             Update_DataContext();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView item = (DataRowView)list.SelectedItem;
-            address.UpdateNote(item.Row.ItemArray);
+            Note item = (Note)list.SelectedItem;
+            db.UpdateNote(item);
             Update_DataContext();
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            string text = text_search.Text;
+            Update_DataContext(text);
         }
     }
 
     public class DBConnection
     {
-        // Извлекаем в поле строку соединения из файла App.config
-        String connectionString = System.Configuration.ConfigurationManager
-            .ConnectionStrings["connectionStringName"].ConnectionString;
+        DBNotesEntities context = new DBNotesEntities();
 
-        DataTable dt = null; // Ссылка на объект DataTable
-
-        public DataTable TableLoad()
+        public List<Note> GetAllNotes(string searchString)
         {
-            if (dt != null) return dt; // Загрузим таблицу только один раз
-            // Заполняем объект таблицы данными из БД 
-            dt = new DataTable();
-            using (SqlConnection сonnection = new SqlConnection(connectionString)) //Создаем объект подключения
-            {
-                SqlCommand selectedCommand = сonnection.CreateCommand(); //Создаем объект команды
-                SqlDataAdapter adapter = new SqlDataAdapter(selectedCommand); //Создаем объект чтения
-                //Загружает данные и схему таблицы 
-                selectedCommand.CommandText = "Select Id, Title, Content, LastUpdate From Notes Order By LastUpdate desc";
-                try
-                {
-                    // Метод сам открывает БД и сам же ее закрывает
-                    adapter.Fill(dt);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ошибка подключения к БД");
-                }
-            }
-            return dt;
+            var notes = context.Notes
+                .Where(n => n.Title.Contains(searchString) || n.Content.Contains(searchString))
+                .OrderByDescending(n => n.LastUpdate)
+                .ToList();
+            return notes;
         }
 
         public void AddNote()
         {
-            using (SqlConnection сonnection = new SqlConnection(connectionString)) //Создаем объект подключения
+            var note = new Note
             {
-                SqlCommand insertCommand = сonnection.CreateCommand();
-
-                insertCommand.CommandText = "Insert Into Notes(LastUpdate) " +
-                    "Values(@LastUpdate)";
-
-                insertCommand.Parameters.AddWithValue("@LastUpdate", DateTime.Now);
-
-                try
-                {
-                    сonnection.Open();
-                    insertCommand.ExecuteNonQuery();
-                    dt = null;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ошибка подключения к БД");
-                }
-                finally
-                {
-                    сonnection.Close();
-                }
-            }
+                Title = "New note",
+                CreatedAt = DateTime.Now,
+                LastUpdate = DateTime.Now
+            };
+            context.Notes.Add(note);
+            context.SaveChanges();
         }
 
-        public void UpdateNote(object[] properties)
+        public void UpdateNote(Note note)
         {
-            using (SqlConnection сonnection = new SqlConnection(connectionString)) //Создаем объект подключения
-            {
-                SqlCommand insertCommand = сonnection.CreateCommand();
-
-                insertCommand.CommandText = "Update Notes " +
-                    "Set Title = @Title, Content = @Content, LastUpdate = @LastUpdate " +
-                    "where Id = @Id";
-
-                insertCommand.Parameters.AddWithValue("@Id", properties[0]);
-                insertCommand.Parameters.AddWithValue("@Title", properties[1]);
-                insertCommand.Parameters.AddWithValue("@Content", properties[2]);
-                insertCommand.Parameters.AddWithValue("@LastUpdate", DateTime.Now);
-
-                try
-                {
-                    сonnection.Open();
-                    insertCommand.ExecuteNonQuery();
-                    dt = null;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ошибка подключения к БД");
-                }
-                finally
-                {
-                    сonnection.Close();
-                }
-            }
+            note.LastUpdate = DateTime.Now;
+            context.SaveChanges();
         }
 
-        public void DeleteNote(int id)
+        public void DeleteNote(Note note)
         {
-            using (SqlConnection сonnection = new SqlConnection(connectionString)) //Создаем объект подключения
-            {
-                SqlCommand insertCommand = сonnection.CreateCommand();
-
-                insertCommand.CommandText = "Delete From Notes" +
-                    " Where Id = @Id";
-
-                insertCommand.Parameters.AddWithValue("@Id", id);
-
-                try
-                {
-                    сonnection.Open();
-                    insertCommand.ExecuteNonQuery();
-                    dt = null;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ошибка подключения к БД");
-                }
-                finally
-                {
-                    сonnection.Close();
-                }
-            }
+            context.Notes.Remove(note);
+            context.SaveChanges();
         }
-
     }
 }

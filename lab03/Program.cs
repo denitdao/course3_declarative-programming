@@ -23,7 +23,10 @@ namespace lab03
             List<Professor> professors = context.Courses.Select(c => c.Professor).Where(c => c.Name.Length > 5).ToList();
             foreach (var item in professors)
                 Console.WriteLine(item.Id + "\t" + item.Surname);
-
+            Console.WriteLine("------------");
+            List<Course> courses = context.Courses.OrderByDescending(c => c.Id).ToList();
+            foreach (var item in courses)
+                Console.WriteLine(item.Id + "\t" + item.Title);
         }
 
         static void WriteSQL()
@@ -31,6 +34,7 @@ namespace lab03
             List<Professor> professors = context.Professors.SqlQuery("SELECT * FROM PROFESSOR").ToList();
             foreach (var item in professors)
                 Console.WriteLine(item.Id + "\t" + item.Surname);
+            Console.WriteLine("------------");
         }
 
     }
